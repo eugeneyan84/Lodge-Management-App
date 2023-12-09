@@ -4,6 +4,7 @@ import Bookings from './pages/Bookings';
 import Settings from './pages/Settings';
 import Account from './pages/Account';
 import Login from './pages/Login';
+import PageNotFound from './pages/PageNotFound';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="account" element={<Account />} />
         <Route path="login" element={<Login />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

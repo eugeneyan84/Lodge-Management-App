@@ -4,7 +4,6 @@ import {
   HiOutlineHome,
   HiOutlineCalendarDays,
   HiOutlineHomeModern,
-  HiOutlineUser,
   HiOutlineUsers,
   HiOutlineCog8Tooth,
 } from 'react-icons/hi2';

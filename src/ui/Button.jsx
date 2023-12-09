@@ -10,6 +10,11 @@ const Button = styled.button`
   color: var(--color-brand-50);
   box-shadow: var(--shadow-sm);
   cursor: pointer;
+
+  // ampersand serves as handle for currently selected element
+  &:hover {
+    background-color: var(--color-brand-700);
+  }
 `;
 
 export default Button;

@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavList = styled.ul`
@@ -49,10 +50,10 @@ const MainNav = () => {
     <nav>
       <NavList>
         <li>
-          <Link href="/dashboard">Home</Link>
+          <NavLink to="/dashboard">Home</NavLink>
         </li>
         <li>
-          <Link href="/bookings">Bookings</Link>
+          <NavLink to="/bookings">Bookings</NavLink>
         </li>
       </NavList>
     </nav>

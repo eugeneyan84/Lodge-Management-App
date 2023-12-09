@@ -7,7 +7,7 @@ const NavList = styled.ul`
   gap: 1rem;
 `;
 
-const Link = styled.a`
+const StyledNavLink = styled(NavLink)`
   &:link,
   &:visited {
     display: flex;
@@ -26,7 +26,7 @@ const Link = styled.a`
   &.active:link,
   &.active:visited {
     color: var(--color-grey-800);
-    background-color: var(--color-grey-50);
+    background-color: var(--color-grey-100);
     border-radius: var(--border-radius-sm);
   }
 
@@ -50,10 +50,10 @@ const MainNav = () => {
     <nav>
       <NavList>
         <li>
-          <NavLink to="/dashboard">Home</NavLink>
+          <StyledNavLink to="/dashboard">Home</StyledNavLink>
         </li>
         <li>
-          <NavLink to="/bookings">Bookings</NavLink>
+          <StyledNavLink to="/bookings">Bookings</StyledNavLink>
         </li>
       </NavList>
     </nav>

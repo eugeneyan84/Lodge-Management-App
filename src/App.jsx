@@ -2,6 +2,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import Input from './ui/Input';
 import Button from './ui/Button';
 import Heading from './ui/Heading';
+import Row from './ui/Row';
 
 const App = () => {
   const handleClick = () => {
@@ -12,11 +13,22 @@ const App = () => {
     <>
       <GlobalStyles />
       <div>
-        <Heading as="h1">Test H1</Heading>
-        <Button onClick={handleClick}>Test Button</Button>
-        <Input placeholder="No. of guests" />
+        <Row type="horizontal">
+          <Heading as="h1">Test H1</Heading>
+          <div>
+            <Heading as="h2">Test H2 header</Heading>
+            <Input placeholder="No. of guests" />
+            <Button onClick={handleClick}>Test Button</Button>
+          </div>
+        </Row>
 
-        <Heading as="h3">Test H3</Heading>
+        <Row>
+          <Heading as="h3">Test H3</Heading>
+          <form>
+            <Input type="number" placeholder="No. of nights" />
+            <Input type="number" placeholder="No. of towels" />
+          </form>
+        </Row>
       </div>
     </>
   );

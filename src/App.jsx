@@ -18,7 +18,9 @@ const App = () => {
           <div>
             <Heading as="h2">Test H2 header</Heading>
             <Input placeholder="No. of guests" />
-            <Button onClick={handleClick}>Test Button</Button>
+            <Button variation="primary" size="medium" onClick={handleClick}>
+              Test Button
+            </Button>
           </div>
         </Row>
 
@@ -27,6 +29,9 @@ const App = () => {
           <form>
             <Input type="number" placeholder="No. of nights" />
             <Input type="number" placeholder="No. of towels" />
+            <Button variation="secondary" size="small">
+              Test Btn again
+            </Button>
           </form>
         </Row>
       </div>

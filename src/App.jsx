@@ -1,41 +1,21 @@
-import GlobalStyles from './styles/GlobalStyles';
-import Input from './ui/Input';
-import Button from './ui/Button';
-import Heading from './ui/Heading';
-import Row from './ui/Row';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import Bookings from './pages/Bookings';
+import Settings from './pages/Settings';
+import Account from './pages/Account';
+import Login from './pages/Login';
 
 const App = () => {
-  const handleClick = () => {
-    alert(`Button clicked!`);
-  };
-
   return (
-    <>
-      <GlobalStyles />
-      <div>
-        <Row type="horizontal">
-          <Heading as="h1">Test H1</Heading>
-          <div>
-            <Heading as="h2">Test H2 header</Heading>
-            <Input placeholder="No. of guests" />
-            <Button variation="primary" size="medium" onClick={handleClick}>
-              Test Button
-            </Button>
-          </div>
-        </Row>
-
-        <Row>
-          <Heading as="h3">Test H3</Heading>
-          <form>
-            <Input type="number" placeholder="No. of nights" />
-            <Input type="number" placeholder="No. of towels" />
-            <Button variation="secondary" size="small">
-              Test Btn again
-            </Button>
-          </form>
-        </Row>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="bookings" element={<Bookings />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="account" element={<Account />} />
+        <Route path="login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

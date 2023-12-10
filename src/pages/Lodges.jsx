@@ -13,6 +13,7 @@ const Lodges = () => {
     <Row type="horizontal">
       <Heading as="h1">All Lodges</Heading>
       <p>Test Lodges</p>
+      <img src="https://qeonbuukmudyccasecjs.supabase.co/storage/v1/object/public/lodge-images/lodge-001.jpg" />
     </Row>
   );
 };

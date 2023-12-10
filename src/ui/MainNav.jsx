@@ -69,9 +69,9 @@ const MainNav = () => {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/cabins">
+          <StyledNavLink to="/lodges">
             <HiOutlineHomeModern />
-            <span>Cabins (tbc)</span>
+            <span>Lodges</span>
           </StyledNavLink>
         </li>
         <li>

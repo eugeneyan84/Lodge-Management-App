@@ -6,6 +6,9 @@ import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import Textarea from '../../ui/Textarea';
 import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createLodge } from '../../services/apiLodges';
+import toast from 'react-hot-toast';
 
 const FormRow = styled.div`
   display: grid;
@@ -44,10 +47,22 @@ const Error = styled.span`
 `;
 
 const CreateLodgeForm = () => {
-  const { register, handleSubmit } = useForm();
+  const queryClient = useQueryClient();
+  const { register, handleSubmit, reset } = useForm();
+  const { mutate, isLoading: isCreating } = useMutation({
+    mutationFn: createLodge,
+    onSuccess: () => {
+      toast.success('New lodge successfully created');
+      queryClient.invalidateQueries({ queryKey: ['lodges'] });
+      reset();
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
 
   const onSubmit = (data) => {
-    console.log(data);
+    mutate(data);
   };
 
   return (
@@ -97,7 +112,7 @@ const CreateLodgeForm = () => {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Add lodge</Button>
+        <Button disabled={isCreating}>Add lodge</Button>
       </FormRow>
     </Form>
   );

@@ -32,7 +32,7 @@ const LodgeTable = () => {
     data: lodges,
     error,
   } = useQuery({
-    queryKey: ['lodge'],
+    queryKey: ['lodges'],
     queryFn: getLodges,
   });
 

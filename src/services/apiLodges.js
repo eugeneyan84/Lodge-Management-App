@@ -21,3 +21,24 @@ export const deleteLodge = async (id) => {
 
   return data;
 };
+
+export const createLodge = async (newLodge) => {
+  const {
+    name,
+    maxCapacity: max_capacity,
+    regularPrice: regular_price,
+    discount,
+    description,
+  } = newLodge;
+  const { data, error } = await supabase
+    .from('lodges')
+    .insert([{ name, max_capacity, regular_price, discount, description }])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Lodges could not be created - ${error.message}`);
+  }
+
+  return data;
+};

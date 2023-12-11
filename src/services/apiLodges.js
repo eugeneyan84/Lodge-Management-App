@@ -16,12 +16,7 @@ export const deleteLodge = async (id) => {
 
   if (error) {
     console.error(error);
-    throw new Error('Lodges could not be loaded');
-  }
-
-  if (error) {
-    console.error(error);
-    throw new Error('Lodge could not be deleted');
+    throw new Error(`Lodges could not be deleted - ${error.message}`);
   }
 
   return data;

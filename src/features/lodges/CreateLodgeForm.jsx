@@ -48,7 +48,7 @@ const Error = styled.span`
 
 const CreateLodgeForm = () => {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, getValues } = useForm();
   const { mutate, isLoading: isCreating } = useMutation({
     mutationFn: createLodge,
     onSuccess: () => {
@@ -112,6 +112,12 @@ const CreateLodgeForm = () => {
           {...register('discount', {
             required: 'Discount vaue is required',
             min: { value: 0, message: 'Minimum value of 0 required' },
+            validate: (value) => {
+              return (
+                value <= getValues().regularPrice ||
+                'Discount cannot be greater than regular price'
+              );
+            },
           })}
         />
       </FormRow>

@@ -65,21 +65,42 @@ const CreateLodgeForm = () => {
     mutate(data);
   };
 
+  const onError = (errors) => {
+    console.log(errors);
+  };
+
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
-        <Input type="text" id="name" {...register('name')} />
+        <Input
+          type="text"
+          id="name"
+          {...register('name', { required: 'Name value is required' })}
+        />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" {...register('maxCapacity')} />
+        <Input
+          type="number"
+          id="maxCapacity"
+          {...register('maxCapacity', {
+            required: 'Max capacity value is required',
+            min: { value: 1, message: 'Minimum value of 1 required' },
+          })}
+        />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" {...register('regularPrice')} />
+        <Input
+          type="number"
+          id="regularPrice"
+          {...register('regularPrice', {
+            required: 'Regular price value is required',
+          })}
+        />
       </FormRow>
 
       <FormRow>
@@ -88,7 +109,10 @@ const CreateLodgeForm = () => {
           type="number"
           id="discount"
           defaultValue={0}
-          {...register('discount')}
+          {...register('discount', {
+            required: 'Discount vaue is required',
+            min: { value: 0, message: 'Minimum value of 0 required' },
+          })}
         />
       </FormRow>
 
@@ -98,7 +122,9 @@ const CreateLodgeForm = () => {
           type="number"
           id="description"
           defaultValue=""
-          {...register('description')}
+          {...register('description', {
+            required: 'Description value is required',
+          })}
         />
       </FormRow>
 

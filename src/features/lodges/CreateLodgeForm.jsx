@@ -29,7 +29,8 @@ const CreateLodgeForm = () => {
   });
 
   const onSubmit = (data) => {
-    mutate(data);
+    console.log(data);
+    mutate({ ...data, image: data.image[0] });
   };
 
   const onError = (errors) => {
@@ -104,7 +105,15 @@ const CreateLodgeForm = () => {
       </FormRow>
 
       <FormRow label="Lodge photo">
-        <FileInput id="image" accept="image/*" disabled={isCreating} />
+        <FileInput
+          id="image"
+          accept="image/*"
+          ß
+          disabled={isCreating}
+          {...register('image', {
+            required: 'Image is required',
+          })}
+        />
       </FormRow>
 
       <FormRow>

@@ -3,6 +3,8 @@ import { formatCurrency } from '../../utils/helpers';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteLodge } from '../../services/apiLodges';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
+import CreateLodgeForm from './CreateLodgeForm';
 
 const TableRow = styled.div`
   display: grid;
@@ -44,6 +46,8 @@ const Discount = styled.div`
 `;
 
 const LodgeRow = ({ lodge }) => {
+  const [showForm, setShowForm] = useState(false);
+
   const {
     id: lodgeId,
     name,
@@ -67,16 +71,22 @@ const LodgeRow = ({ lodge }) => {
   });
 
   return (
-    <TableRow role="row">
-      <img src={image} />
-      <Name>{name}</Name>
-      <div>{maxCapacity} guests</div>
-      <Price>{formatCurrency(regPrice)}</Price>
-      <Discount>{formatCurrency(discount)}</Discount>
-      <button onClick={() => mutate(lodgeId)} disabled={isDeleting}>
-        Delete
-      </button>
-    </TableRow>
+    <>
+      <TableRow role="row">
+        <img src={image} />
+        <Name>{name}</Name>
+        <div>{maxCapacity} guests</div>
+        <Price>{formatCurrency(regPrice)}</Price>
+        <Discount>{formatCurrency(discount)}</Discount>
+        <div>
+          <button onClick={() => setShowForm((show) => !show)}>Edit</button>
+          <button onClick={() => mutate(lodgeId)} disabled={isDeleting}>
+            Delete
+          </button>
+        </div>
+      </TableRow>
+      {showForm && <CreateLodgeForm lodgeToEdit={lodge} />}
+    </>
   );
 };
 

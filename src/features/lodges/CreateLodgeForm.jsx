@@ -1,23 +1,36 @@
-import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 import Input from '../../ui/Input';
 import Form from '../../ui/Form';
 import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import Textarea from '../../ui/Textarea';
-import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createLodge } from '../../services/apiLodges';
-import toast from 'react-hot-toast';
+import { createEditLodge } from '../../services/apiLodges';
 import FormRow from '../../ui/FormRow';
 
-const CreateLodgeForm = () => {
+const CreateLodgeForm = ({ lodgeToEdit = {} }) => {
+  const {
+    id: editId,
+    max_capacity: maxCapacity,
+    regular_price: regularPrice,
+    image_url: image,
+    ...editValuesRaw
+  } = lodgeToEdit;
+  const editValues = { ...editValuesRaw, maxCapacity, regularPrice, image };
+  //console.log(editValues);
+  const isEditSession = Boolean(editId);
+  console.log(isEditSession);
+
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: isEditSession ? editValues : {},
+  });
   const { errors } = formState;
 
-  const { mutate, isLoading: isCreating } = useMutation({
-    mutationFn: createLodge,
+  const { mutate: createLodge, isLoading: isCreating } = useMutation({
+    mutationFn: createEditLodge,
     onSuccess: () => {
       toast.success('New lodge successfully created');
       queryClient.invalidateQueries({ queryKey: ['lodges'] });
@@ -28,9 +41,30 @@ const CreateLodgeForm = () => {
     },
   });
 
+  const { mutate: editLodge, isLoading: isEditing } = useMutation({
+    mutationFn: ({ newLodgeData, id }) => createEditLodge(newLodgeData, id),
+    onSuccess: () => {
+      toast.success('New lodge successfully edited');
+      queryClient.invalidateQueries({ queryKey: ['lodges'] });
+      reset(getValues());
+    },
+    onError: (err) => {
+      console.error(err);
+      toast.error(err.message);
+    },
+  });
+
+  const isWorking = isCreating || isEditing;
+
   const onSubmit = (data) => {
+    const image = typeof data.image === 'string' ? data.image : data.image[0];
     console.log(data);
-    mutate({ ...data, image: data.image[0] });
+    if (isEditSession) {
+      console.log(data);
+      editLodge({ newLodgeData: { ...data, image }, id: editId });
+    } else {
+      createLodge({ ...data, image: image });
+    }
   };
 
   const onError = (errors) => {
@@ -44,7 +78,7 @@ const CreateLodgeForm = () => {
         <Input
           type="text"
           id="name"
-          disabled={isCreating}
+          disabled={isWorking}
           {...register('name', { required: 'Name value is required' })}
         />
       </FormRow>
@@ -53,7 +87,7 @@ const CreateLodgeForm = () => {
         <Input
           type="number"
           id="maxCapacity"
-          disabled={isCreating}
+          disabled={isWorking}
           {...register('maxCapacity', {
             required: 'Max capacity value is required',
             min: { value: 1, message: 'Minimum value of 1 required' },
@@ -65,7 +99,7 @@ const CreateLodgeForm = () => {
         <Input
           type="number"
           id="regularPrice"
-          disabled={isCreating}
+          disabled={isWorking}
           {...register('regularPrice', {
             required: 'Regular price value is required',
           })}
@@ -76,7 +110,7 @@ const CreateLodgeForm = () => {
         <Input
           type="number"
           id="discount"
-          disabled={isCreating}
+          disabled={isWorking}
           defaultValue={0}
           {...register('discount', {
             required: 'Discount vaue is required',
@@ -96,7 +130,7 @@ const CreateLodgeForm = () => {
         <Textarea
           type="number"
           id="description"
-          disabled={isCreating}
+          disabled={isWorking}
           defaultValue=""
           {...register('description', {
             required: 'Description value is required',
@@ -108,10 +142,9 @@ const CreateLodgeForm = () => {
         <FileInput
           id="image"
           accept="image/*"
-          ß
-          disabled={isCreating}
+          disabled={isWorking}
           {...register('image', {
-            required: 'Image is required',
+            required: isEditSession ? false : 'Image is required',
           })}
         />
       </FormRow>
@@ -119,9 +152,11 @@ const CreateLodgeForm = () => {
       <FormRow>
         {/* type is an HTML attribute! */}
         <Button variation="secondary" type="reset">
-          Cancel
+          Clear
         </Button>
-        <Button disabled={isCreating}>Add lodge</Button>
+        <Button disabled={isWorking}>
+          {isEditSession ? 'Edit Lodge' : 'Add Lodge'}
+        </Button>
       </FormRow>
     </Form>
   );

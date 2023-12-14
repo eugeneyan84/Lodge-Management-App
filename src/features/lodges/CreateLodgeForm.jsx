@@ -1,14 +1,13 @@
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
 
 import Input from '../../ui/Input';
 import Form from '../../ui/Form';
 import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import Textarea from '../../ui/Textarea';
-import { createEditLodge } from '../../services/apiLodges';
 import FormRow from '../../ui/FormRow';
+import { useCreateLodge } from './useCreateLodge';
+import { useEditLodge } from './useEditLodge';
 
 const CreateLodgeForm = ({ lodgeToEdit = {} }) => {
   const {
@@ -23,36 +22,14 @@ const CreateLodgeForm = ({ lodgeToEdit = {} }) => {
   const isEditSession = Boolean(editId);
   console.log(isEditSession);
 
-  const queryClient = useQueryClient();
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
 
-  const { mutate: createLodge, isLoading: isCreating } = useMutation({
-    mutationFn: createEditLodge,
-    onSuccess: () => {
-      toast.success('New lodge successfully created');
-      queryClient.invalidateQueries({ queryKey: ['lodges'] });
-      reset();
-    },
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
+  const { isCreating, createLodge } = useCreateLodge();
 
-  const { mutate: editLodge, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newLodgeData, id }) => createEditLodge(newLodgeData, id),
-    onSuccess: () => {
-      toast.success('New lodge successfully edited');
-      queryClient.invalidateQueries({ queryKey: ['lodges'] });
-      reset(getValues());
-    },
-    onError: (err) => {
-      console.error(err);
-      toast.error(err.message);
-    },
-  });
+  const { isEditing, editLodge } = useEditLodge();
 
   const isWorking = isCreating || isEditing;
 
@@ -61,9 +38,23 @@ const CreateLodgeForm = ({ lodgeToEdit = {} }) => {
     console.log(data);
     if (isEditSession) {
       console.log(data);
-      editLodge({ newLodgeData: { ...data, image }, id: editId });
+      editLodge(
+        { newLodgeData: { ...data, image }, id: editId },
+        {
+          onSuccess: (data) => {
+            reset(getValues());
+          },
+        }
+      );
     } else {
-      createLodge({ ...data, image: image });
+      createLodge(
+        { ...data, image: image },
+        {
+          onSuccess: (data) => {
+            reset();
+          },
+        }
+      );
     }
   };
 

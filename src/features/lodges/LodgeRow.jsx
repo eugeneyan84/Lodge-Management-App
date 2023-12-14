@@ -5,6 +5,7 @@ import { deleteLodge } from '../../services/apiLodges';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import CreateLodgeForm from './CreateLodgeForm';
+import { useDeleteLodge } from './useDeleteLodge';
 
 const TableRow = styled.div`
   display: grid;
@@ -47,6 +48,7 @@ const Discount = styled.div`
 
 const LodgeRow = ({ lodge }) => {
   const [showForm, setShowForm] = useState(false);
+  const { isDeleting, deleteLodge } = useDeleteLodge();
 
   const {
     id: lodgeId,
@@ -57,19 +59,6 @@ const LodgeRow = ({ lodge }) => {
     image_url: image,
   } = lodge;
 
-  const queryClient = useQueryClient();
-
-  const { isLoading: isDeleting, mutate } = useMutation({
-    mutationFn: deleteLodge,
-    onSuccess: () => {
-      toast.success('Lodge entry successfully deleted');
-      queryClient.invalidateQueries({ queryKey: ['lodges'] });
-    },
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
-
   return (
     <>
       <TableRow role="row">
@@ -77,10 +66,14 @@ const LodgeRow = ({ lodge }) => {
         <Name>{name}</Name>
         <div>{maxCapacity} guests</div>
         <Price>{formatCurrency(regPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <div>
           <button onClick={() => setShowForm((show) => !show)}>Edit</button>
-          <button onClick={() => mutate(lodgeId)} disabled={isDeleting}>
+          <button onClick={() => deleteLodge(lodgeId)} disabled={isDeleting}>
             Delete
           </button>
         </div>

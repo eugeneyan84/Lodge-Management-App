@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { getLodges } from '../../services/apiLodges';
 import Spinner from '../../ui/Spinner';
 import LodgeRow from './LodgeRow';
+import { useLodges } from './useLodges';
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -27,14 +28,7 @@ const TableHeader = styled.header`
 `;
 
 const LodgeTable = () => {
-  const {
-    isLoading,
-    data: lodges,
-    error,
-  } = useQuery({
-    queryKey: ['lodges'],
-    queryFn: getLodges,
-  });
+  const { isLoading, lodges, error } = useLodges();
 
   if (isLoading) {
     return <Spinner />;

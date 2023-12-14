@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { formatCurrency } from '../../utils/helpers';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteLodge } from '../../services/apiLodges';
-import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
+
+import { formatCurrency } from '../../utils/helpers';
 import CreateLodgeForm from './CreateLodgeForm';
 import { useDeleteLodge } from './useDeleteLodge';
+import { useCreateLodge } from './useCreateLodge';
 
 const TableRow = styled.div`
   display: grid;
@@ -47,9 +47,6 @@ const Discount = styled.div`
 `;
 
 const LodgeRow = ({ lodge }) => {
-  const [showForm, setShowForm] = useState(false);
-  const { isDeleting, deleteLodge } = useDeleteLodge();
-
   const {
     id: lodgeId,
     name,
@@ -57,12 +54,28 @@ const LodgeRow = ({ lodge }) => {
     regular_price: regPrice,
     discount,
     image_url: image,
+    description,
   } = lodge;
+
+  const [showForm, setShowForm] = useState(false);
+  const { isDeleting, deleteLodge } = useDeleteLodge();
+  const { isCreating, createLodge } = useCreateLodge();
+
+  const handleDuplicate = () => {
+    createLodge({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice: regPrice,
+      discount,
+      image,
+      description,
+    });
+  };
 
   return (
     <>
       <TableRow role="row">
-        <img src={image} />
+        <Img src={image} />
         <Name>{name}</Name>
         <div>{maxCapacity} guests</div>
         <Price>{formatCurrency(regPrice)}</Price>
@@ -72,9 +85,14 @@ const LodgeRow = ({ lodge }) => {
           <span>&mdash;</span>
         )}
         <div>
-          <button onClick={() => setShowForm((show) => !show)}>Edit</button>
+          <button disabled={isCreating} onClick={handleDuplicate}>
+            <HiSquare2Stack />
+          </button>
+          <button onClick={() => setShowForm((show) => !show)}>
+            <HiPencil />
+          </button>
           <button onClick={() => deleteLodge(lodgeId)} disabled={isDeleting}>
-            Delete
+            <HiTrash />
           </button>
         </div>
       </TableRow>

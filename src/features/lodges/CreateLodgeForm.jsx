@@ -9,7 +9,7 @@ import FormRow from '../../ui/FormRow';
 import { useCreateLodge } from './useCreateLodge';
 import { useEditLodge } from './useEditLodge';
 
-const CreateLodgeForm = ({ lodgeToEdit = {} }) => {
+const CreateLodgeForm = ({ lodgeToEdit = {}, onCloseModal }) => {
   const {
     id: editId,
     max_capacity: maxCapacity,
@@ -43,6 +43,7 @@ const CreateLodgeForm = ({ lodgeToEdit = {} }) => {
         {
           onSuccess: (data) => {
             reset(getValues());
+            onCloseModal?.();
           },
         }
       );
@@ -52,6 +53,7 @@ const CreateLodgeForm = ({ lodgeToEdit = {} }) => {
         {
           onSuccess: (data) => {
             reset();
+            onCloseModal?.();
           },
         }
       );
@@ -142,8 +144,12 @@ const CreateLodgeForm = ({ lodgeToEdit = {} }) => {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
-          Clear
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
+          Cancel
         </Button>
         <Button disabled={isWorking}>
           {isEditSession ? 'Edit Lodge' : 'Add Lodge'}

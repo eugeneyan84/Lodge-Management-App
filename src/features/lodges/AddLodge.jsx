@@ -18,7 +18,7 @@ const AddLodge = () => {
       </Button>
       {isOpenModal && (
         <Modal onClose={() => setIsOpenModal(false)}>
-          <CreateLodgeForm />
+          <CreateLodgeForm onCloseModal={() => setIsOpenModal(false)} />
         </Modal>
       )}
     </div>

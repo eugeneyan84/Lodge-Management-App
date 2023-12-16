@@ -16,7 +16,11 @@ const AddLodge = () => {
       >
         Add new Lodge
       </Button>
-      {isOpenModal && <Modal />}
+      {isOpenModal && (
+        <Modal onClose={() => setIsOpenModal(false)}>
+          <CreateLodgeForm />
+        </Modal>
+      )}
     </div>
   );
 };

@@ -3,8 +3,29 @@ import { useState } from 'react';
 import Button from '../../ui/Button';
 import CreateLodgeForm from './CreateLodgeForm';
 import Modal from '../../ui/Modal';
+import LodgeTable from './LodgeTable';
 
 const AddLodge = () => {
+  return (
+    <Modal>
+      <Modal.Open opens="lodge-form">
+        <Button>Add new Lodge</Button>
+      </Modal.Open>
+      <Modal.Window name="lodge-form">
+        <CreateLodgeForm />
+      </Modal.Window>
+
+      {/*<Modal.Open opens="table">
+        <Button>Display table</Button>
+      </Modal.Open>
+      <Modal.Window name="table">
+        <LodgeTable />
+      </Modal.Window>*/}
+    </Modal>
+  );
+};
+
+const AddLodge_old = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (

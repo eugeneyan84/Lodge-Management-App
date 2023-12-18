@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
 
 import { formatCurrency } from '../../utils/helpers';
 import CreateLodgeForm from './CreateLodgeForm';
 import { useDeleteLodge } from './useDeleteLodge';
 import { useCreateLodge } from './useCreateLodge';
+import Modal from '../../ui/Modal';
 
 const TableRow = styled.div`
   display: grid;
@@ -57,7 +57,7 @@ const LodgeRow = ({ lodge }) => {
     description,
   } = lodge;
 
-  const [showForm, setShowForm] = useState(false);
+  //const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteLodge } = useDeleteLodge();
   const { isCreating, createLodge } = useCreateLodge();
 
@@ -73,31 +73,33 @@ const LodgeRow = ({ lodge }) => {
   };
 
   return (
-    <>
-      <TableRow role="row">
-        <Img src={image} />
-        <Name>{name}</Name>
-        <div>{maxCapacity} guests</div>
-        <Price>{formatCurrency(regPrice)}</Price>
-        {discount ? (
-          <Discount>{formatCurrency(discount)}</Discount>
-        ) : (
-          <span>&mdash;</span>
-        )}
-        <div>
-          <button disabled={isCreating} onClick={handleDuplicate}>
-            <HiSquare2Stack />
-          </button>
-          <button onClick={() => setShowForm((show) => !show)}>
-            <HiPencil />
-          </button>
-          <button onClick={() => deleteLodge(lodgeId)} disabled={isDeleting}>
-            <HiTrash />
-          </button>
-        </div>
-      </TableRow>
-      {showForm && <CreateLodgeForm lodgeToEdit={lodge} />}
-    </>
+    <TableRow role="row">
+      <Img src={image} />
+      <Name>{name}</Name>
+      <div>{maxCapacity} guests</div>
+      <Price>{formatCurrency(regPrice)}</Price>
+      {discount ? (
+        <Discount>{formatCurrency(discount)}</Discount>
+      ) : (
+        <span>&mdash;</span>
+      )}
+      <div>
+        <button disabled={isCreating} onClick={handleDuplicate}>
+          <HiSquare2Stack />
+        </button>
+        <Modal>
+          <Modal.Open opens="edit">
+            <button>{<HiPencil />}</button>
+          </Modal.Open>
+          <Modal.Window name="edit">
+            <CreateLodgeForm lodgeToEdit={lodge} />
+          </Modal.Window>
+        </Modal>
+        <button onClick={() => deleteLodge(lodgeId)} disabled={isDeleting}>
+          <HiTrash />
+        </button>
+      </div>
+    </TableRow>
   );
 };
 

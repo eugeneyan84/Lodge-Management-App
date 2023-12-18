@@ -7,8 +7,9 @@ import { useDeleteLodge } from './useDeleteLodge';
 import { useCreateLodge } from './useCreateLodge';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
+import Table from '../../ui/Table';
 
-const TableRow = styled.div`
+const TableRow_old = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
   column-gap: 2.4rem;
@@ -74,7 +75,7 @@ const LodgeRow = ({ lodge }) => {
   };
 
   return (
-    <TableRow role="row">
+    <Table.Row>
       <Img src={image} />
       <Name>{name}</Name>
       <div>{maxCapacity} guests</div>
@@ -109,7 +110,7 @@ const LodgeRow = ({ lodge }) => {
           </Modal.Window>
         </Modal>
       </div>
-    </TableRow>
+    </Table.Row>
   );
 };
 

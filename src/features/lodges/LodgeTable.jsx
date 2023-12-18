@@ -1,11 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
-import { getLodges } from '../../services/apiLodges';
 import Spinner from '../../ui/Spinner';
 import LodgeRow from './LodgeRow';
 import { useLodges } from './useLodges';
+import Table from '../../ui/Table';
 
-const Table = styled.div`
+const Table_old = styled.div`
   border: 1px solid var(--color-grey-200);
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
@@ -34,21 +33,22 @@ const LodgeTable = () => {
     return <Spinner />;
   }
 
-  const renderedLodges = lodges.map((lodge) => {
+  const renderLodgeRecords = (lodge) => {
     return <LodgeRow key={lodge.id} lodge={lodge} />;
-  });
+  };
 
   return (
-    <Table role="table">
-      <TableHeader role="row">
+    <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+      <Table.Header>
         <div></div>
         <div>Lodge</div>
         <div>Capacity</div>
         <div>Price</div>
         <div>Discount</div>
         <div></div>
-      </TableHeader>
-      {renderedLodges}
+      </Table.Header>
+
+      <Table.Body data={lodges} renderFn={renderLodgeRecords} />
     </Table>
   );
 };

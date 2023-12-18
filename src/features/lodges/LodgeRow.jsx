@@ -6,6 +6,7 @@ import CreateLodgeForm from './CreateLodgeForm';
 import { useDeleteLodge } from './useDeleteLodge';
 import { useCreateLodge } from './useCreateLodge';
 import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 
 const TableRow = styled.div`
   display: grid;
@@ -94,10 +95,19 @@ const LodgeRow = ({ lodge }) => {
           <Modal.Window name="edit">
             <CreateLodgeForm lodgeToEdit={lodge} />
           </Modal.Window>
+          <Modal.Open opens="delete">
+            <button onClick={() => deleteLodge(lodgeId)} disabled={isDeleting}>
+              <HiTrash />
+            </button>
+          </Modal.Open>
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              resourceName={name}
+              onConfirm={() => deleteLodge(lodgeId)}
+              disabled={isDeleting}
+            />
+          </Modal.Window>
         </Modal>
-        <button onClick={() => deleteLodge(lodgeId)} disabled={isDeleting}>
-          <HiTrash />
-        </button>
       </div>
     </TableRow>
   );

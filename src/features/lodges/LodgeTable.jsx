@@ -3,6 +3,7 @@ import Spinner from '../../ui/Spinner';
 import LodgeRow from './LodgeRow';
 import { useLodges } from './useLodges';
 import Table from '../../ui/Table';
+import Menus from '../../ui/Menus';
 
 const Table_old = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -38,18 +39,20 @@ const LodgeTable = () => {
   };
 
   return (
-    <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
-      <Table.Header>
-        <div></div>
-        <div>Lodge</div>
-        <div>Capacity</div>
-        <div>Price</div>
-        <div>Discount</div>
-        <div></div>
-      </Table.Header>
+    <Menus>
+      <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+        <Table.Header>
+          <div></div>
+          <div>Lodge</div>
+          <div>Capacity</div>
+          <div>Price</div>
+          <div>Discount</div>
+          <div></div>
+        </Table.Header>
 
-      <Table.Body data={lodges} renderFn={renderLodgeRecords} />
-    </Table>
+        <Table.Body data={lodges} renderFn={renderLodgeRecords} />
+      </Table>
+    </Menus>
   );
 };
 

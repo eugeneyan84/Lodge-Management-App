@@ -8,6 +8,7 @@ import { useCreateLodge } from './useCreateLodge';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import Table from '../../ui/Table';
+import Menus from '../../ui/Menus';
 
 const TableRow_old = styled.div`
   display: grid;
@@ -109,6 +110,16 @@ const LodgeRow = ({ lodge }) => {
             />
           </Modal.Window>
         </Modal>
+        <Menus.Menu>
+          <Menus.Toggle id={lodgeId} />
+          <Menus.List id={lodgeId}>
+            <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+              Duplicate
+            </Menus.Button>
+            <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+            <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+          </Menus.List>
+        </Menus.Menu>
       </div>
     </Table.Row>
   );

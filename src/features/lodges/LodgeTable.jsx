@@ -50,6 +50,16 @@ const LodgeTable = () => {
     });
   }
 
+  //console.log(filteredLodges);
+
+  const sortBy = searchParams.get('sortBy') || 'startDate-asc';
+  const [field, direction] = sortBy.split('-');
+  //console.log(`field: ${field}, direction: ${direction}`);
+  const modifier = direction === 'asc' ? 1 : -1;
+  const sortedLodges = filteredLodges.sort((a, b) => {
+    return modifier * (a[field] - b[field]);
+  });
+
   const renderLodgeRecords = (lodge) => {
     return <LodgeRow key={lodge.id} lodge={lodge} />;
   };
@@ -66,7 +76,7 @@ const LodgeTable = () => {
           <div></div>
         </Table.Header>
 
-        <Table.Body data={filteredLodges} renderFn={renderLodgeRecords} />
+        <Table.Body data={sortedLodges} renderFn={renderLodgeRecords} />
       </Table>
     </Menus>
   );

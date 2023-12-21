@@ -5,6 +5,7 @@ import LodgeRow from './LodgeRow';
 import { useLodges } from './useLodges';
 import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
+import Empty from '../../ui/Empty';
 
 /*const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -34,6 +35,10 @@ const LodgeTable = () => {
 
   if (isLoading) {
     return <Spinner />;
+  }
+
+  if (!lodges.length) {
+    return <Empty resource="lodges" />;
   }
 
   const filterValue = searchParams.get('discount') || 'all';

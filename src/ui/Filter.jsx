@@ -45,11 +45,14 @@ const Filter = ({ filterField, options }) => {
     searchParams.get(filterField) || options.at(0).value;
 
   const renderedOptions = options.map((option) => {
+    /*     console.log(
+      `[Filter] option.value: ${option.value}, currentFilterValue: ${currentFilterValue}`
+    ); */
     return (
       <FilterButton
         key={option.value}
         onClick={() => handleClick(option.value)}
-        active={option.value === currentFilterValue}
+        $active={option.value === currentFilterValue}
         disabled={option.value === currentFilterValue}
       >
         {option.label}

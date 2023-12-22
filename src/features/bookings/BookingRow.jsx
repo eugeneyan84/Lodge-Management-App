@@ -35,7 +35,6 @@ const Amount = styled.div`
 `;
 
 const BookingRow = ({ booking }) => {
-  console.log(booking);
   const {
     id: bookingId,
     created_at,

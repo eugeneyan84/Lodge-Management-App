@@ -42,7 +42,11 @@ const BookingDetail = () => {
   const { status, id: bookingId } = booking;
 
   const handleDeleteBooking = () => {
-    deleteBooking(bookingId);
+    deleteBooking(bookingId, {
+      onSettled: () => {
+        navigate(-1);
+      },
+    });
   };
 
   //const booking = {};

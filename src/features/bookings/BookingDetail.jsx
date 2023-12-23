@@ -54,7 +54,7 @@ const BookingDetail = () => {
 
       <ButtonGroup>
         {status === 'unconfirmed' && (
-          <Button onClick={() => navigate(`checkin/${bookingId}`)}>
+          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
             Check in
           </Button>
         )}

@@ -77,7 +77,7 @@ const MainNav = () => {
         <li>
           <StyledNavLink to="/users">
             <HiOutlineUsers />
-            <span>Users (tbc)</span>
+            <span>Users</span>
           </StyledNavLink>
         </li>
         <li>

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Logout from '../features/authentication/Logout';
+import Heading from './Heading';
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
@@ -6,8 +8,20 @@ const StyledHeader = styled.header`
   border-bottom: 1px solid var(--color-grey-100);
 `;
 
+const HeaderContentsDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Header = () => {
-  return <StyledHeader>Header here!</StyledHeader>;
+  return (
+    <StyledHeader>
+      <HeaderContentsDiv>
+        <Heading as="h1"></Heading>
+        <Logout />
+      </HeaderContentsDiv>
+    </StyledHeader>
+  );
 };
 
 export default Header;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Logo from './Logo';
 import MainNav from './MainNav';
 import Uploader from '../data/Uploader';
+import { useState } from 'react';
 
 const StyledSidebar = styled.aside`
   background-color: var(--color-grey-0);
@@ -15,12 +16,14 @@ const StyledSidebar = styled.aside`
 `;
 
 const Sidebar = () => {
+  const [isShowUploader, setIsShowUploader] = useState(false);
+
   return (
     <StyledSidebar>
       <Logo />
       <MainNav />
 
-      <Uploader />
+      {isShowUploader && <Uploader />}
     </StyledSidebar>
   );
 };

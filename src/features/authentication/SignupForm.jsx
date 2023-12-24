@@ -7,13 +7,17 @@ import Input from '../../ui/Input';
 const SignupForm = () => {
   // when register function is called within element in jsx, it will
   // create a few props which is then spread onto the targeted element
-  const { register, formState, getValues } = useForm();
+  const { register, formState, getValues, handleSubmit } = useForm();
 
   const { errors } = formState;
 
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
-    <Form>
-      <FormRow label="Full name" error={''}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormRow label="Full name" error={errors?.fullName?.message}>
         <Input
           type="text"
           id="fullName"
@@ -21,7 +25,7 @@ const SignupForm = () => {
         />
       </FormRow>
 
-      <FormRow label="Email address" error={''}>
+      <FormRow label="Email address" error={errors?.email?.message}>
         <Input
           type="email"
           id="email"
@@ -35,7 +39,10 @@ const SignupForm = () => {
         />
       </FormRow>
 
-      <FormRow label="Password (min 8 characters)" error={''}>
+      <FormRow
+        label="Password (min 8 characters)"
+        error={errors?.password?.message}
+      >
         <Input
           type="password"
           id="password"
@@ -49,7 +56,7 @@ const SignupForm = () => {
         />
       </FormRow>
 
-      <FormRow label="Repeat password" error={''}>
+      <FormRow label="Repeat password" error={errors?.passwordConfirm?.message}>
         <Input
           type="password"
           id="passwordConfirm"

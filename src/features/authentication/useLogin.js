@@ -11,13 +11,13 @@ export const useLogin = () => {
     mutationFn: ({ email, password }) => {
       return loginApi({ email, password });
     },
-    onSuccess: (userData) => {
+    onSuccess: (data) => {
       // to assist useQuery in useUser, so react-query
       // can immediately use the data instead of having to
       // trigger th API call
-      queryClient.setQueriesData(['user'], userData);
+      queryClient.setQueryData(['user'], data.user);
 
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     },
     onError: (error) => {
       console.error('ERROR', error);

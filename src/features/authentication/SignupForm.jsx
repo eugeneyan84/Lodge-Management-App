@@ -7,7 +7,7 @@ import Input from '../../ui/Input';
 const SignupForm = () => {
   // when register function is called within element in jsx, it will
   // create a few props which is then spread onto the targeted element
-  const { register, formState } = useForm();
+  const { register, formState, getValues } = useForm();
 
   const { errors } = formState;
 
@@ -25,7 +25,13 @@ const SignupForm = () => {
         <Input
           type="email"
           id="email"
-          {...register('email', { required: 'Mandatory field' })}
+          {...register('email', {
+            required: 'Mandatory field',
+            pattern: {
+              value: /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: 'Please provide a valid email address',
+            },
+          })}
         />
       </FormRow>
 
@@ -33,7 +39,13 @@ const SignupForm = () => {
         <Input
           type="password"
           id="password"
-          {...register('password', { required: 'Mandatory field' })}
+          {...register('password', {
+            required: 'Mandatory field',
+            minLength: {
+              value: 8,
+              message: 'Password length needs to be at least 8 characters',
+            },
+          })}
         />
       </FormRow>
 
@@ -41,7 +53,15 @@ const SignupForm = () => {
         <Input
           type="password"
           id="passwordConfirm"
-          {...register('passwordConfirm', { required: 'Mandatory field' })}
+          {...register('passwordConfirm', {
+            required: 'Mandatory field',
+            validate: (value) => {
+              return (
+                value === getValues().password ||
+                'Passwords in both fields require an exact match'
+              );
+            },
+          })}
         />
       </FormRow>
 

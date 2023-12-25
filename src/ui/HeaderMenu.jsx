@@ -4,6 +4,7 @@ import { HiOutlineUser } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
 import Logout from '../features/authentication/Logout';
 import UserAvatar from '../features/authentication/UserAvatar';
+import ColourThemeToggle from './ColourThemeToggle';
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
@@ -31,6 +32,9 @@ const HeaderMenu = () => {
         <ButtonIcon onClick={handleUserClick}>
           <HiOutlineUser />
         </ButtonIcon>
+      </Li>
+      <Li>
+        <ColourThemeToggle />
       </Li>
       <Li>
         <Logout />

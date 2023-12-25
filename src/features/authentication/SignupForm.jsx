@@ -9,7 +9,7 @@ const SignupForm = () => {
   // when register function is called within element in jsx, it will
   // create a few props which is then spread onto the targeted element
   const { register, formState, getValues, handleSubmit, reset } = useForm();
-  const { signup, isLoading } = useSignup();
+  const { signup, isPending: isSigningUp } = useSignup();
 
   const { errors } = formState;
 
@@ -25,6 +25,7 @@ const SignupForm = () => {
           type="text"
           id="fullName"
           {...register('fullName', { required: 'Mandatory field' })}
+          disabled={isSigningUp}
         />
       </FormRow>
 
@@ -39,6 +40,7 @@ const SignupForm = () => {
               message: 'Please provide a valid email address',
             },
           })}
+          disabled={isSigningUp}
         />
       </FormRow>
 
@@ -56,6 +58,7 @@ const SignupForm = () => {
               message: 'Password length needs to be at least 8 characters',
             },
           })}
+          disabled={isSigningUp}
         />
       </FormRow>
 
@@ -72,15 +75,21 @@ const SignupForm = () => {
               );
             },
           })}
+          disabled={isSigningUp}
         />
       </FormRow>
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
-          Cancel
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={reset}
+          disabled={isSigningUp}
+        >
+          Reset
         </Button>
-        <Button>Create new user</Button>
+        <Button disabled={isSigningUp}>Create new user</Button>
       </FormRow>
     </Form>
   );

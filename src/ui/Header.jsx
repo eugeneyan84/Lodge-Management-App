@@ -1,11 +1,15 @@
 import styled from 'styled-components';
-import Logout from '../features/authentication/Logout';
-import Heading from './Heading';
+import HeaderMenu from './HeaderMenu';
+import UserAvatar from '../features/authentication/UserAvatar';
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
   padding: 1.2rem 4.8rem;
   border-bottom: 1px solid var(--color-grey-100);
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 const HeaderContentsDiv = styled.div`
@@ -16,10 +20,7 @@ const HeaderContentsDiv = styled.div`
 const Header = () => {
   return (
     <StyledHeader>
-      <HeaderContentsDiv>
-        <Heading as="h1"></Heading>
-        <Logout />
-      </HeaderContentsDiv>
+      <HeaderMenu />
     </StyledHeader>
   );
 };

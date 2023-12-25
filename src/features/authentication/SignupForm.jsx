@@ -3,16 +3,19 @@ import Button from '../../ui/Button';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
+import { useSignup } from './useSignup';
 
 const SignupForm = () => {
   // when register function is called within element in jsx, it will
   // create a few props which is then spread onto the targeted element
-  const { register, formState, getValues, handleSubmit } = useForm();
+  const { register, formState, getValues, handleSubmit, reset } = useForm();
+  const { signup, isLoading } = useSignup();
 
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = ({ fullName, email, password }) => {
+    //console.log(data);
+    signup({ fullName, email, password }, { onSettled: reset });
   };
 
   return (

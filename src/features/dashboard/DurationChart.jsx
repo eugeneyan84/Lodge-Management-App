@@ -8,6 +8,7 @@ import {
 } from 'recharts';
 import styled from 'styled-components';
 import Heading from '../../ui/Heading';
+import { useDarkMode } from '../../context/ColourModeContext';
 
 const ChartBox = styled.div`
   /* Box */
@@ -73,37 +74,37 @@ const startDataLight = [
 const startDataDark = [
   {
     duration: '1 night',
-    value: 0,
+    value: 1,
     color: '#b91c1c',
   },
   {
     duration: '2 nights',
-    value: 0,
+    value: 3,
     color: '#c2410c',
   },
   {
     duration: '3 nights',
-    value: 0,
+    value: 4,
     color: '#a16207',
   },
   {
     duration: '4-5 nights',
-    value: 0,
+    value: 2,
     color: '#4d7c0f',
   },
   {
     duration: '6-7 nights',
-    value: 0,
+    value: 7,
     color: '#15803d',
   },
   {
     duration: '8-14 nights',
-    value: 0,
+    value: 4,
     color: '#0f766e',
   },
   {
     duration: '15-21 nights',
-    value: 0,
+    value: 2,
     color: '#1d4ed8',
   },
   {
@@ -141,13 +142,16 @@ const prepareData = (startData, stays) => {
 };
 
 const DurationChart = ({ confirmedStays }) => {
+  const { isDarkMode } = useDarkMode();
+  const startData = isDarkMode ? startDataDark : startDataLight;
+  const data = prepareData(startData, confirmedStays);
   return (
     <ChartBox>
       <Heading as="h2">Duration Analysis</Heading>
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height={250}>
         <PieChart>
           <Pie
-            data={startDataLight}
+            data={data}
             nameKey="duration"
             dataKey="value"
             innerRadius={70}
@@ -155,7 +159,7 @@ const DurationChart = ({ confirmedStays }) => {
             cx="40%"
             cy="50%"
           >
-            {startDataLight.map((dataPoint) => {
+            {data.map((dataPoint) => {
               return (
                 <Cell
                   fill={dataPoint.color}

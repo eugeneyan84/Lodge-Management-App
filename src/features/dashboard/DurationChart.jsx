@@ -9,6 +9,7 @@ import {
 import styled from 'styled-components';
 import Heading from '../../ui/Heading';
 import { useDarkMode } from '../../context/ColourModeContext';
+import Empty from '../../ui/Empty';
 
 const ChartBox = styled.div`
   /* Box */
@@ -31,37 +32,37 @@ const ChartBox = styled.div`
 const startDataLight = [
   {
     duration: '1 night',
-    value: 1,
+    value: 0,
     color: '#ef4444',
   },
   {
     duration: '2 nights',
-    value: 3,
+    value: 0,
     color: '#f97316',
   },
   {
     duration: '3 nights',
-    value: 4,
+    value: 0,
     color: '#eab308',
   },
   {
     duration: '4-5 nights',
-    value: 2,
+    value: 0,
     color: '#84cc16',
   },
   {
     duration: '6-7 nights',
-    value: 7,
+    value: 0,
     color: '#22c55e',
   },
   {
     duration: '8-14 nights',
-    value: 4,
+    value: 0,
     color: '#14b8a6',
   },
   {
     duration: '15-21 nights',
-    value: 2,
+    value: 0,
     color: '#3b82f6',
   },
   {
@@ -74,37 +75,37 @@ const startDataLight = [
 const startDataDark = [
   {
     duration: '1 night',
-    value: 1,
+    value: 0,
     color: '#b91c1c',
   },
   {
     duration: '2 nights',
-    value: 3,
+    value: 0,
     color: '#c2410c',
   },
   {
     duration: '3 nights',
-    value: 4,
+    value: 0,
     color: '#a16207',
   },
   {
     duration: '4-5 nights',
-    value: 2,
+    value: 0,
     color: '#4d7c0f',
   },
   {
     duration: '6-7 nights',
-    value: 7,
+    value: 0,
     color: '#15803d',
   },
   {
     duration: '8-14 nights',
-    value: 4,
+    value: 0,
     color: '#0f766e',
   },
   {
     duration: '15-21 nights',
-    value: 2,
+    value: 0,
     color: '#1d4ed8',
   },
   {
@@ -125,7 +126,7 @@ const prepareData = (startData, stays) => {
 
   const data = stays
     .reduce((arr, cur) => {
-      const num = cur.numNights;
+      const num = cur.num_nights;
       if (num === 1) return incArrayValue(arr, '1 night');
       if (num === 2) return incArrayValue(arr, '2 nights');
       if (num === 3) return incArrayValue(arr, '3 nights');
@@ -145,6 +146,16 @@ const DurationChart = ({ confirmedStays }) => {
   const { isDarkMode } = useDarkMode();
   const startData = isDarkMode ? startDataDark : startDataLight;
   const data = prepareData(startData, confirmedStays);
+
+  if (confirmedStays.length === 0) {
+    return (
+      <ChartBox>
+        <Heading as="h2">Duration Analysis</Heading>
+        <Empty resource="confirmed bookings for selected time-period" />
+      </ChartBox>
+    );
+  }
+
   return (
     <ChartBox>
       <Heading as="h2">Duration Analysis</Heading>
@@ -154,10 +165,10 @@ const DurationChart = ({ confirmedStays }) => {
             data={data}
             nameKey="duration"
             dataKey="value"
-            innerRadius={70}
-            outerRadius={110}
+            innerRadius={50}
+            outerRadius={100}
             cx="40%"
-            cy="50%"
+            cy="45%"
           >
             {data.map((dataPoint) => {
               return (
@@ -177,6 +188,7 @@ const DurationChart = ({ confirmedStays }) => {
             layout="vertical"
             iconSize={12}
             iconType="circle"
+            wrapperStyle={{ fontSize: '15px' }}
           />
         </PieChart>
       </ResponsiveContainer>

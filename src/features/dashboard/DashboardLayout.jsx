@@ -4,6 +4,8 @@ import Spinner from '../../ui/Spinner';
 import { useRecentStays } from './useRecentStays';
 import Stats from './Stats';
 import { useLodges } from '../lodges/useLodges';
+import SalesChart from './SalesChart';
+import DurationChart from './DurationChart';
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -39,9 +41,9 @@ const DashboardLayout = () => {
         numDays={numDays}
         lodgeCount={lodges.length}
       />
-      <div>Today's movement</div>
-      <div>Chart stay durations</div>
-      <div>Chart sales</div>
+      <div>Today's activity</div>
+      <DurationChart confirmedStays={confirmedStays} />
+      <SalesChart bookings={bookings} numDays={numDays} />
     </StyledDashboardLayout>
   );
 };

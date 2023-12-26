@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Logo from './Logo';
 import MainNav from './MainNav';
-import Uploader from '../data/Uploader';
+//import Uploader from '../data/Uploader';
 import { useState } from 'react';
 
 const StyledSidebar = styled.aside`
@@ -23,7 +23,7 @@ const Sidebar = () => {
       <Logo />
       <MainNav />
 
-      {isShowUploader && <Uploader />}
+      {/*isShowUploader && <Uploader />*/}
     </StyledSidebar>
   );
 };

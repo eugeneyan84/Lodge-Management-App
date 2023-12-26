@@ -78,15 +78,35 @@ const SalesChart = () => {
       <Heading as="h2">Sales</Heading>
       <ResponsiveContainer height={300} width="100%">
         <AreaChart data={fakeData}>
-          <XAxis dataKey="label" />
-          <YAxis unit="$" />
+          <XAxis
+            dataKey="label"
+            tick={{ fill: colours.text }}
+            tickLine={{ stroke: colours.text }}
+          />
+          <YAxis
+            unit="$"
+            tick={{ fill: colours.text }}
+            tickLine={{ stroke: colours.text }}
+          />
           <CartesianGrid strokeDasharray={6} />
-          <Tooltip />
+          <Tooltip contentStyle={{ backgroundColor: colours.background }} />
           <Area
             dataKey="totalSales"
             type="monotone"
             stroke={colours.totalSales.stroke}
             fill={colours.totalSales.fill}
+            strokeWidth={2}
+            name="Total Sales"
+            unit="$"
+          />
+          <Area
+            dataKey="extrasSales"
+            type="monotone"
+            stroke={colours.extrasSales.stroke}
+            fill={colours.extrasSales.fill}
+            strokeWidth={2}
+            name="Extras Sales"
+            unit="$"
           />
         </AreaChart>
       </ResponsiveContainer>

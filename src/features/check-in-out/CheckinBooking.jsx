@@ -35,7 +35,7 @@ const CheckinBooking = () => {
     num_guests: numGuests,
     has_breakfast: hasBreakfast,
     num_nights: numNights,
-  } = booking;
+  } = booking ?? {};
   const { settings, isLoading: isLoadingSettings } = useSettings();
 
   const optionalBreakfastPrice =

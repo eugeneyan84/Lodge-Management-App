@@ -4,6 +4,7 @@ import { getToday } from '../utils/helpers';
 import { PAGE_SIZE } from '../utils/constants';
 
 export const getBookings = async ({ filter, sortBy, page = 1 }) => {
+  console.log(`getBookings start`);
   let query = supabase
     .from('bookings')
     .select(
@@ -40,6 +41,7 @@ export const getBookings = async ({ filter, sortBy, page = 1 }) => {
 };
 
 export const getBooking = async (id) => {
+  console.log(id);
   const { data, error } = await supabase
     .from('bookings')
     .select('*, lodges(*), guests(*)')
@@ -90,11 +92,12 @@ export const getStaysAfterDate = async (date) => {
 
 // Activity means that there is a check in or a check out today
 export const getStaysTodayActivity = async () => {
+  console.log(`getStaysTodayActivity start`);
   const { data, error } = await supabase
     .from('bookings')
-    .select('*, guests(fullName, nationality, countryFlag)')
+    .select('*, guests(full_name, nationality, country_flag)')
     .or(
-      `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
+      `and(status.eq.unconfirmed,start_date.eq.${getToday()}),and(status.eq.checked-in,end_date.eq.${getToday()})`
     )
     .order('created_at');
 
@@ -106,6 +109,7 @@ export const getStaysTodayActivity = async () => {
     console.error(error);
     throw new Error('Bookings could not get loaded');
   }
+  console.log(data);
   return data;
 };
 

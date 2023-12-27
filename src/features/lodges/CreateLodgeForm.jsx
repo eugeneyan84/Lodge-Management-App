@@ -4,10 +4,10 @@ import Input from '../../ui/Input';
 import Form from '../../ui/Form';
 import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
-import Textarea from '../../ui/Textarea';
 import FormRow from '../../ui/FormRow';
 import { useCreateLodge } from './useCreateLodge';
 import { useEditLodge } from './useEditLodge';
+import TextArea from '../../ui/TextArea';
 
 const CreateLodgeForm = ({ lodgeToEdit = {}, onCloseModal }) => {
   const {
@@ -123,7 +123,7 @@ const CreateLodgeForm = ({ lodgeToEdit = {}, onCloseModal }) => {
         label="Description for website"
         error={errors?.description?.message}
       >
-        <Textarea
+        <TextArea
           type="number"
           id="description"
           disabled={isWorking}
